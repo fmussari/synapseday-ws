@@ -1,0 +1,18 @@
+{
+	"name": "RestSynapseCognitiveService",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"description": "Link to Synapse Cognitive Service endpoint\nhttps://synapse-cognitive-service.cognitiveservices.azure.com/\nTask 3 .9\nNombre original: CognitiveRESTEndpoint",
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://synapse-cognitive-service.cognitiveservices.azure.com/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

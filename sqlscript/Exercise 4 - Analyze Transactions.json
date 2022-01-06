@@ -1,0 +1,21 @@
+{
+	"name": "Exercise 4 - Analyze Transactions",
+	"properties": {
+		"description": "https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/artifacts/04/Exercise%204%20-%20Analyze%20Transactions.sql",
+		"folder": {
+			"name": "00-setup-workspace/Task 9 - SQL Scripts"
+		},
+		"content": {
+			"query": "-- Exercise 4 - High-Performance Analysis with Azure Synapse Dedicated SQL Pools\n-- https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/04-high-performance-analysis.md\n\n-- TASK 1\n\nSELECT \n    CustomerKey, \n    SUM(Quantity) as Quantity\nFROM \n    wwi.FactSale\nGROUP BY \n    CustomerKey\n\n\n/* \nEjecutado de manera correcta el 30 Dec 2021 sobre SQLPool01 dedicado\n\n*/",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

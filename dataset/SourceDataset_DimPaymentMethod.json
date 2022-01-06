@@ -1,0 +1,50 @@
+{
+	"name": "SourceDataset_DimPaymentMethod",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "wwi_dimpaymentmethod",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Payment Method Key",
+				"type": "String"
+			},
+			{
+				"name": "WWI Payment Method ID",
+				"type": "String"
+			},
+			{
+				"name": "Payment Method",
+				"type": "String"
+			},
+			{
+				"name": "Valid From",
+				"type": "String"
+			},
+			{
+				"name": "Valid To",
+				"type": "String"
+			},
+			{
+				"name": "Lineage Key",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,70 @@
+{
+	"name": "SourceDataset_FactPurchase",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "wwi_factpurchase",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Purchase Key",
+				"type": "String"
+			},
+			{
+				"name": "Date Key",
+				"type": "String"
+			},
+			{
+				"name": "Supplier Key",
+				"type": "String"
+			},
+			{
+				"name": "Stock Item Key",
+				"type": "String"
+			},
+			{
+				"name": "WWI Purchase Order ID",
+				"type": "String"
+			},
+			{
+				"name": "Ordered Outers",
+				"type": "String"
+			},
+			{
+				"name": "Ordered Quantity",
+				"type": "String"
+			},
+			{
+				"name": "Received Outers",
+				"type": "String"
+			},
+			{
+				"name": "Package",
+				"type": "String"
+			},
+			{
+				"name": "Is Order Finalized",
+				"type": "String"
+			},
+			{
+				"name": "Lineage Key",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

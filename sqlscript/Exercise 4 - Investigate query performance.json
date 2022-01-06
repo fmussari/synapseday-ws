@@ -1,0 +1,21 @@
+{
+	"name": "Exercise 4 - Investigate query performance",
+	"properties": {
+		"description": "https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/artifacts/04/Exercise%204%20-%20Investigate%20query%20performance.sql",
+		"folder": {
+			"name": "00-setup-workspace/Task 9 - SQL Scripts"
+		},
+		"content": {
+			"query": "-- Exercise 4 - High-Performance Analysis with Azure Synapse Dedicated SQL Pools\n-- https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/04-high-performance-analysis.md\n\n-- TASK 2\n\n-- Ejecuté primero esta línea sola\nSELECT  count(*) from wwi_perf.FactSale_Slow\n-- Resultado\n-- 83,449,830 registros\n-- Total execution time: 00:00:02.783\n\n-- Luego esta línea sola\nSELECT  count(*) from wwi_perf.FactSale_Fast\n-- Resultado\n-- 83,449,830 registros\n-- Total execution time: 00:00:02.374\n\n-- Resultados similares\n\n\n-- Luego estas líneas con tabla FactSale_Slow\nSELECT\n    FS.CustomerKey\n    ,MIN(FS.Quantity) as MinQuantity\n    ,MAX(FS.Quantity) as MaxQuantity\n    ,AVG(FS.TaxRate) as AvgTaxRate\n    ,AVG(FS.TaxAmount) as AvgTaxAmount\n    ,AVG(FS.TotalExcludingTax) as AverageSaleWithoutTax\n    ,AVG(FS.TotalIncludingTax) as AverageSaleWithTax\n    ,COUNT(DISTINCT FS.StockItemKey) as DistinctStockItems\n    ,COUNT(DISTINCT DC.Country) as DistinctCountries\nFROM\n    wwi_perf.FactSale_Slow FS\n    join wwi.DimCity DC ON\n        DC.CityKey = FS.CityKey\nGROUP BY\n    FS.CustomerKey\n-- Resultado\n-- Total execution time: 00:00:56.685 (Ejecución 1)\n-- Total execution time: 00:00:30.746 (Ejecución 2)\n-- Total execution time: 00:00:33.084 (Ejecución 4)\n\n\n\nSELECT\n    FS.CustomerKey\n    ,MIN(FS.Quantity) as MinQuantity\n    ,MAX(FS.Quantity) as MaxQuantity\n    ,AVG(FS.TaxRate) as AvgTaxRate\n    ,AVG(FS.TaxAmount) as AvgTaxAmount\n    ,AVG(FS.TotalExcludingTax) as AverageSaleWithoutTax\n    ,AVG(FS.TotalIncludingTax) as AverageSaleWithTax\n    ,COUNT(DISTINCT FS.StockItemKey) as DistinctStockItems\n    ,COUNT(DISTINCT DC.Country) as DistinctCountries\nFROM\n    wwi_perf.FactSale_Fast FS\n    join wwi.DimCity DC ON\n        DC.CityKey = FS.CityKey\nGROUP BY\n    FS.CustomerKey\n\n-- Resultados:\n-- Total execution time: 00:03:34.815 (Ejecución 1)\n-- Total execution time: 00:03:11.177 (Ejecución 2)\n-- Total execution time: 00:03:13.629 (Ejecución 3)\n-- Total execution time: 00:02:58.218\n\n\n\n-- Está tardando mucho más el query sobre la tabla wwi_perf.FactSale_Fast\n-- Coño, será que invertí la forma en que se generan las tablas con los nombres ??\n\n-- Revisando los queries que generan cada tabla (botón derecho, SQL, Create) - Ver en carpeta 04-high-performance-analysis\n-- Se observa que Fast tiene DISTRIBUTION = HASH ( [CustomerKey] )\n-- Y Slow tiene DISTRIBUTION = ROUND_ROBIN,\n\n-- Bueh, pos no sé entonces por qué el resultado\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

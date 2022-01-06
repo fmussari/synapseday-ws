@@ -1,0 +1,29 @@
+{
+	"name": "synapseCognitiveService",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"description": "Link to synapse-cognitive-service",
+		"annotations": [],
+		"type": "CognitiveService",
+		"typeProperties": {
+			"subscriptionId": "fbfcdd32-da9a-480c-b5c3-1b5d0c6d797c",
+			"resourceGroup": "azure-synapse-analytics-day",
+			"csName": "synapse-cognitive-service",
+			"csKind": "CognitiveServices",
+			"csLocation": "eastus",
+			"endPoint": "https://synapse-cognitive-service.cognitiveservices.azure.com/",
+			"csKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVaultDev",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "synapse-cognitive-service-key"
+			}
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

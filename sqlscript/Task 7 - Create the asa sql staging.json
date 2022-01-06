@@ -1,0 +1,20 @@
+{
+	"name": "Task 7 - Create the asa sql staging",
+	"properties": {
+		"folder": {
+			"name": "00-setup-workspace"
+		},
+		"content": {
+			"query": "-- https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/00-setup-workspace.md#task-7---configure-sqlpool01\n-- 3. Create the asa.sql.staging login in the master database of Workspace using the following script:\n\n\nUSE master\nGO\n\nCREATE LOGIN [asa.sql.staging]\nWITH PASSWORD = '10042076CIpa'\nGO\n\n-- 4. Create the asa.sql.staging user in SQLPool01 using the following script:\n\nUSE SQLPool01\nGO\n\nCREATE USER [asa.sql.staging]\n    FOR LOGIN [asa.sql.staging]\n    WITH DEFAULT_SCHEMA = dbo\nGO\n\n-- Add user to the required roles\n\nEXEC sp_addrolemember N'db_datareader', N'asa.sql.staging'\nGO\n\nEXEC sp_addrolemember N'db_datawriter', N'asa.sql.staging'\nGO\n\nEXEC sp_addrolemember N'db_ddladmin', N'asa.sql.staging'\nGO\n\n-- 5. Configure access control to workspace pipeline runs in SQLPool01 using the following script:\n\n--Create user in DB\nCREATE USER [synapseday-ws] FROM EXTERNAL PROVIDER;\n\n--Granting permission to the identity\nGRANT CONTROL ON DATABASE::SQLPool01 TO [synapseday-ws];",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

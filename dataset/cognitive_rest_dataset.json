@@ -1,0 +1,19 @@
+{
+	"name": "cognitive_rest_dataset",
+	"properties": {
+		"description": "Para crear este dataset, tratando de hacer el \"empty dataset\" del tutorial, cloné otro que tenía (de los csv) y volqué el contenido del json :\nhttps://github.com/solliancenet/azure-synapse-analytics-day/blob/master/artifacts/00/datasets/cognitive/cognitive_rest_dataset.json \n Task 3 .10",
+		"linkedServiceName": {
+			"referenceName": "RestSynapseCognitiveService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [
+			"Tutorial: https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/00-setup-workspace.md"
+		],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "text/analytics/v3.1-preview.3/sentiment?opinionMining=true"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

@@ -1,0 +1,18 @@
+{
+	"name": "wwi_facttransaction",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"description": "https://solliancepublicdata.blob.core.windows.net/wwi-01/wwi-facttransaction.csv",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://solliancepublicdata.blob.core.windows.net/wwi-01/wwi-facttransaction.csv",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

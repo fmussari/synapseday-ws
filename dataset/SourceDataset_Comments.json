@@ -1,0 +1,71 @@
+{
+	"name": "SourceDataset_Comments",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "wwi_comments",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": ",",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "inreplyto",
+				"type": "String"
+			},
+			{
+				"name": "name",
+				"type": "String"
+			},
+			{
+				"name": "userid",
+				"type": "String"
+			},
+			{
+				"name": "emailaddress",
+				"type": "String"
+			},
+			{
+				"name": "datetime",
+				"type": "String"
+			},
+			{
+				"name": "topic",
+				"type": "String"
+			},
+			{
+				"name": "subject",
+				"type": "String"
+			},
+			{
+				"name": "comment",
+				"type": "String"
+			},
+			{
+				"name": "spamscore",
+				"type": "String"
+			},
+			{
+				"name": "votes",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

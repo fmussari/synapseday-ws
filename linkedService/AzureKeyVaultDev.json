@@ -1,0 +1,12 @@
+{
+	"name": "AzureKeyVaultDev",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"description": "Linked service to key-vault-deve",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://key-vault-deve.vault.azure.net/"
+		}
+	}
+}

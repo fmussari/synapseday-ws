@@ -1,0 +1,18 @@
+{
+	"name": "model_onnx_hex",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"description": "Tratando de copiar un archivo desde github al blob storage",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://raw.githubusercontent.com/solliancenet/azure-synapse-analytics-day/master/artifacts/00/ml/model.onnx.hex",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

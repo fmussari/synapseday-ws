@@ -1,0 +1,51 @@
+{
+	"name": "SourceDataset_DimTransactionType",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "wwi_dimtransactiontype",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": "|",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Transaction Type Key",
+				"type": "String"
+			},
+			{
+				"name": "WWI Transaction Type ID",
+				"type": "String"
+			},
+			{
+				"name": "Transaction Type",
+				"type": "String"
+			},
+			{
+				"name": "Valid From",
+				"type": "String"
+			},
+			{
+				"name": "Valid To",
+				"type": "String"
+			},
+			{
+				"name": "Lineage Key\r",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

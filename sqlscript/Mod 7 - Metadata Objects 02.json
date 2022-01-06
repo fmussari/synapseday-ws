@@ -1,0 +1,20 @@
+{
+	"name": "Mod 7 - Metadata Objects 02",
+	"properties": {
+		"folder": {
+			"name": "ASA 30 days Challenge"
+		},
+		"content": {
+			"query": "-- Create an external table on protected data\n\n-- Unit 5 of 8\n\nUSE challengeMetadata; \nGO \n\nCREATE EXTERNAL TABLE populationExternalTable \n( \n    [country_code] VARCHAR (5) COLLATE Latin1_General_BIN2, \n    [country_name] VARCHAR (100) COLLATE Latin1_General_BIN2, \n    [year] smallint, \n    [population] bigint \n) \nWITH ( \n    LOCATION = 'csv/population/population.csv', \n    DATA_SOURCE = sqlondemanddemo, \n    --FILE_FORMAT = QuotedCSVWithHeaderFormat \n    -- El Script anterior creó el formato con este nombre:\n    FILE_FORMAT = QuotedCSVWithHeader\n);\n\n-- Otra casilla\nCREATE EXTERNAL TABLE Taxi ( \n    vendor_id VARCHAR(100) COLLATE Latin1_General_BIN2,  \n    pickup_datetime DATETIME2,  \n    dropoff_datetime DATETIME2, \n    passenger_count INT, \n    trip_distance FLOAT, \n    fare_amount FLOAT, \n    tip_amount FLOAT, \n    tolls_amount FLOAT, \n    total_amount FLOAT \n) WITH ( \n        LOCATION = 'puYear=*/puMonth=*/*.parquet', \n        DATA_SOURCE = YellowTaxi, \n        --FILE_FORMAT = ParquetFormat \n        -- El script anterior creó el formato con este nombre:\n        FILE_FORMAT = NativeParquet\n); ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "challengeMetadata",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"name": "wwi_sentiments_adls",
+	"properties": {
+		"description": "Based on\nhttps://github.com/solliancenet/azure-synapse-analytics-day/blob/master/artifacts/00/datasets/adls/wwi_sentiments_adls.json",
+		"linkedServiceName": {
+			"referenceName": "asadatalake01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Task 4 - adls"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "bronze/sentiment",
+				"fileSystem": "dev"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

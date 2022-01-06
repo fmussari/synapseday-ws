@@ -1,0 +1,25 @@
+{
+	"name": "staging_enrichedcustomer_adls",
+	"properties": {
+		"description": "Based on\nhttps://github.com/solliancenet/azure-synapse-analytics-day/blob/master/artifacts/00/datasets/adls/staging_enrichedcustomer_adls.json",
+		"linkedServiceName": {
+			"referenceName": "asadatalake01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Task 4 - adls"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "customer",
+				"fileSystem": "staging"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

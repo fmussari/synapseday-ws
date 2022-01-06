@@ -1,0 +1,18 @@
+{
+	"name": "Tests - FM",
+	"properties": {
+		"description": "https://docs.microsoft.com/en-us/learn/modules/query-data-lake-using-azure-synapse-serverless-sql-pools/2-query-csv-file",
+		"content": {
+			"query": "-- This is auto-generated code\n-- This code only works in a dedicated SQL Pool\n-- https://docs.microsoft.com/en-us/learn/modules/query-data-lake-using-azure-synapse-serverless-sql-pools/2-query-csv-file\n\n-- CREATE DATABASE Challenge\n-- No me funcionó\n-- ALTER DATABASE Challenge COLLATE Latin1_General_100_BIN2_UTF8;\n-- No me funcionó\n\n-- DROP DATABASE Challenge\n-- La borré\n\n--La volví a crear con el COLLATE para UTF8\n--https://techcommunity.microsoft.com/t5/azure-synapse-analytics-blog/always-use-utf-8-collations-to-read-utf-8-text-in-serverless-sql/ba-p/1883633\n\n--CREATE DATABASE Challenge\n--    COLLATE Latin1_General_100_BIN2_UTF8;\n\n--USE Challenge\n\n--create external data source covid\n--with ( location = 'https://pandemicdatalake.blob.core.windows.net/public/curated/covid-19/ecdc_cases' );\n\n\n-- Se ejecutó bien:\n/*\nselect top 10 *\nfrom openrowset(\n        bulk 'latest/ecdc_cases.csv',\n        data_source = 'covid',\n        format = 'csv',\n        parser_version ='2.0',\n        firstrow = 2\n    ) as rows\n*/\n\nselect top 10 * \nfrom openrowset(\n    bulk 'https://pandemicdatalake.blob.core.windows.net/public/curated/covid-19/ecdc_cases/latest/ecdc_cases.parquet', \n    format = 'parquet') as rows\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Challenge",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

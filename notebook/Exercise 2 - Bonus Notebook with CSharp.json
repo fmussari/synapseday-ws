@@ -1,0 +1,193 @@
+{
+	"name": "Exercise 2 - Bonus Notebook with CSharp",
+	"properties": {
+		"description": "https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/artifacts/02/Exercise%202%20-%20Bonus%20Notebook%20with%20CSharp.ipynb",
+		"folder": {
+			"name": "02-build-modern-dw-pipelines"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "SparkPool01",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "7b29fe32-5b1f-463c-83d1-1ee94a73c3ad"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "csharp"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/fbfcdd32-da9a-480c-b5c3-1b5d0c6d797c/resourceGroups/Azure-Synapse-Analytics-Day/providers/Microsoft.Synapse/workspaces/synapseday-ws/bigDataPools/SparkPool01",
+				"name": "SparkPool01",
+				"type": "Spark",
+				"endpoint": "https://synapseday-ws.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/SparkPool01",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/02-build-modern-dw-pipelines.md#bonus-challenge"
+				],
+				"attachments": null
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					"// Configure the connection to the data lake\r\n",
+					"var adlsPath = \"abfss://wwi@synapsedaydatalake.dfs.core.windows.net\";"
+				],
+				"attachments": null,
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"// Import the sales data from the data lake\r\n",
+					"var sales = spark.Read().Option(\"header\", \"true\").Option(\"inferSchema\", \"true\").Option(\"sep\", \"|\").Csv($\"{adlsPath}/factsale-csv/2012/Q4\");\r\n",
+					"sales.Show(5);\r\n",
+					"sales.PrintSchema();"
+				],
+				"attachments": null,
+				"execution_count": 2
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"#### OJO\r\n",
+					"No logré hacer login en la base de datos...  \r\n",
+					"Error:\r\n",
+					"```\r\n",
+					"[2021-12-28T10:50:41.3746925Z] [vm-9a048668] [Error] [JvmBridge] JVM method execution failed: Nonstatic method 'save' failed for class '86' when called with no arguments\r\n",
+					"[2021-12-28T10:50:41.3750372Z] [vm-9a048668] [Error] [JvmBridge] com.microsoft.sqlserver.jdbc.SQLServerException: Cannot open database \"SQLPool1\" requested by the login. The login failed. ClientConnectionId:92ecdb68-c9c9-4f54-92e4-93a578422178\r\n",
+					"```"
+				],
+				"attachments": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"using System;\r\n",
+					"using System.Collections.Generic;\r\n",
+					"\r\n",
+					"// Set up a JDBC connection to Azure Synapse Analytics\r\n",
+					"//var jdbcUsername = \"asa.sql.staging@synapseday-ws\";\r\n",
+					"var jdbcUsername = \"asa.sql.staging\";\r\n",
+					"var jdbcPassword = \"10042076CIpa\";\r\n",
+					"\r\n",
+					"var jdbcConnectionString = $\"jdbc:sqlserver://synapseday-ws.sql.azuresynapse.net:1433;database=SQLPool1;\";\r\n",
+					"\r\n",
+					"// Set target table name\r\n",
+					"var tableName = $\"wwi_staging.Sale_CSharp\";\r\n",
+					"\r\n",
+					"// Write the retrieved sales data into a staging table in Azure Synapse Analytics.\r\n",
+					"sales\r\n",
+					"    .Limit(1500)\r\n",
+					"    .Write()\r\n",
+					"    .Format(\"jdbc\")\r\n",
+					"    .Options(\r\n",
+					"        new Dictionary<string, string>\r\n",
+					"        {\r\n",
+					"            {\"url\", jdbcConnectionString},\r\n",
+					"            {\"dbtable\", tableName},\r\n",
+					"            {\"user\", jdbcUsername},\r\n",
+					"            {\"password\", jdbcPassword},\r\n",
+					"            {\"encrypt\", \"false\"},\r\n",
+					"            {\"trustServerCertificate\", \"true\"},\r\n",
+					"            {\"createTableColumnTypes\", \"DeliveryDateKey VARCHAR(50), Description VARCHAR(100), Package VARCHAR(50)\"} // Override the column types for string values. They are assigned nvarchar(max) by default, and that is not compatible with columnstore index.\r\n",
+					"        }\r\n",
+					"    )\r\n",
+					"    .Mode(\"append\")\r\n",
+					"    .Save();"
+				],
+				"attachments": null,
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			}
+		]
+	}
+}

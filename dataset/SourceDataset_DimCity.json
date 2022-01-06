@@ -1,0 +1,79 @@
+{
+	"name": "SourceDataset_DimCity",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "wwi_dimcity",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": "|",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "City Key",
+				"type": "String"
+			},
+			{
+				"name": "WWI City ID",
+				"type": "String"
+			},
+			{
+				"name": "City",
+				"type": "String"
+			},
+			{
+				"name": "State Province",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Continent",
+				"type": "String"
+			},
+			{
+				"name": "Sales Territory",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Subregion",
+				"type": "String"
+			},
+			{
+				"name": "Latest Recorded Population",
+				"type": "String"
+			},
+			{
+				"name": "Valid From",
+				"type": "String"
+			},
+			{
+				"name": "Valid To",
+				"type": "String"
+			},
+			{
+				"name": "Lineage Key\r",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

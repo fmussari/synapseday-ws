@@ -1,0 +1,21 @@
+{
+	"name": "Mod 15 - Use dynamic management views",
+	"properties": {
+		"description": "https://docs.microsoft.com/en-us/learn/modules/manage-monitor-data-warehouse-activities-azure-synapse-analytics/6-use-dynamic-management-views-to-identify-troubleshoot-query-performance",
+		"folder": {
+			"name": "ASA 30 days Challenge"
+		},
+		"content": {
+			"query": "-- https://docs.microsoft.com/en-us/learn/modules/manage-monitor-data-warehouse-activities-azure-synapse-analytics/6-use-dynamic-management-views-to-identify-troubleshoot-query-performance\n\n\n-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- \n-- Other Active Connections\nSELECT * FROM sys.dm_pdw_exec_sessions where status <> 'Closed' and session_id <> session_id();\n--\n-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- \n\n-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- \n-- Monitor active queries\nSELECT *\nFROM sys.dm_pdw_exec_requests\nWHERE status not in ('Completed','Failed','Cancelled')\n  AND session_id <> session_id()\nORDER BY submit_time DESC;\n\n-- Find top 10 queries longest running queries\nSELECT TOP 20 *\nFROM sys.dm_pdw_exec_requests\nORDER BY total_elapsed_time DESC;\n--\n-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

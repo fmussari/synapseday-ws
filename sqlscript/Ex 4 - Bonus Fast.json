@@ -1,0 +1,20 @@
+{
+	"name": "Ex 4 - Bonus Fast",
+	"properties": {
+		"folder": {
+			"name": "04-high-performance-analysis"
+		},
+		"content": {
+			"query": "-- Right Click, Create ...\n-- wwi_perf.FactSale_Fast\n\n\nSET ANSI_NULLS ON\nGO\nSET QUOTED_IDENTIFIER ON\nGO\n\nCREATE TABLE [wwi_perf].[FactSale_Fast]\n( \n\t[SaleKey] [bigint]  NOT NULL,\n\t[CityKey] [int]  NOT NULL,\n\t[CustomerKey] [int]  NOT NULL,\n\t[BillToCustomerKey] [int]  NOT NULL,\n\t[StockItemKey] [int]  NOT NULL,\n\t[InvoiceDateKey] [date]  NOT NULL,\n\t[DeliveryDateKey] [date]  NULL,\n\t[SalespersonKey] [int]  NOT NULL,\n\t[WWIInvoiceID] [int]  NOT NULL,\n\t[Description] [nvarchar](100)  NOT NULL,\n\t[Package] [nvarchar](50)  NOT NULL,\n\t[Quantity] [int]  NOT NULL,\n\t[UnitPrice] [decimal](18,2)  NOT NULL,\n\t[TaxRate] [decimal](18,3)  NOT NULL,\n\t[TotalExcludingTax] [decimal](18,2)  NOT NULL,\n\t[TaxAmount] [decimal](18,2)  NOT NULL,\n\t[Profit] [decimal](18,2)  NOT NULL,\n\t[TotalIncludingTax] [decimal](18,2)  NOT NULL,\n\t[TotalDryItems] [int]  NOT NULL,\n\t[TotalChillerItems] [int]  NOT NULL,\n\t[LineageKey] [int]  NOT NULL\n)\nWITH\n(\n\tDISTRIBUTION = HASH ( [CustomerKey] ),\n\tCLUSTERED COLUMNSTORE INDEX\n)\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

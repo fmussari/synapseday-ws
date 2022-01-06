@@ -1,0 +1,62 @@
+{
+	"name": "SourceDataset_FactStockHolding",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "wwi_factstockholding",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Stock Holding Key",
+				"type": "String"
+			},
+			{
+				"name": "Stock Item Key",
+				"type": "String"
+			},
+			{
+				"name": "Quantity On Hand",
+				"type": "String"
+			},
+			{
+				"name": "Bin Location",
+				"type": "String"
+			},
+			{
+				"name": "Last Stocktake Quantity",
+				"type": "String"
+			},
+			{
+				"name": "Last Cost Price",
+				"type": "String"
+			},
+			{
+				"name": "Reorder Level",
+				"type": "String"
+			},
+			{
+				"name": "Target Stock Level",
+				"type": "String"
+			},
+			{
+				"name": "Lineage Key",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

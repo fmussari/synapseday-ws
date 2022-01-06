@@ -1,0 +1,29 @@
+{
+	"name": "DestinationDataset_PostalcodesBLOB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blobstorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "postalcodes.csv",
+				"folderPath": "aggregated_data",
+				"container": "destination-ds"
+			},
+			"columnDelimiter": ",",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

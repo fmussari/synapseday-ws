@@ -1,0 +1,90 @@
+{
+	"name": "CopyPipeline_y6y",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_y6y",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/1567975108_ccs_2019-09-08_16.38.28.gzip"
+					},
+					{
+						"name": "Destination",
+						"value": "staging/gcplbtc/"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "GoogleCloudStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings",
+							"filePattern": "setOfObjects"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['localbitcoins']['buy']['ad_list']"
+								},
+								"sink": {
+									"path": "$['localbitcoins']['buy']['ad_list']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['localbitcoins']['sell']['ad_list']"
+								},
+								"sink": {
+									"path": "$['localbitcoins']['sell']['ad_list']"
+								}
+							}
+						],
+						"collectionReference": "$['localbitcoins']['buy']['ad_list']"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_y6y",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_y6y",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-01-03T14:57:07Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "Mod 14 - Work with JSON data in SQL pools",
+	"properties": {
+		"folder": {
+			"name": "ASA 30 days Challenge"
+		},
+		"content": {
+			"query": "-- Work with JSON data in SQL pools\n-- https://docs.microsoft.com/en-us/learn/modules/understand-data-warehouse-developer-features-of-azure-synapse-analytics/8-work-json-data-sql-pools\n\n\n-- Part 1\nselect top 10 * \nfrom \n    openrowset( \n        bulk 'https://pandemicdatalake.blob.core.windows.net/public/curated/covid-19/ecdc_cases/latest/ecdc_cases.jsonl', \n        format = 'csv', \n        fieldterminator ='0x0b', \n        fieldquote = '0x0b' \n    ) with (doc nvarchar(max)) as rows\n\n/*\nselect top 10 * \nfrom \n    openrowset( \n        bulk 'https://pandemicdatalake.blob.core.windows.net/public/curated/covid-19/ecdc_cases/latest/ecdc_cases.json', \n        format = 'csv', \n        fieldterminator ='0x0b', \n        fieldquote = '0x0b', \n        rowterminator = '0x0b' --> You need to override rowterminator to read classic JSON \n    ) with (doc nvarchar(max)) as rows\n*/\n\n-- Part 2\n-- FM touch\nUSE ExternalBlobTable\nIF (EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'covid')) BEGIN\n    DROP EXTERNAL DATA SOURCE covid\nEND\n\ncreate external data source covid \nwith (location = 'https://pandemicdatalake.blob.core.windows.net/public/curated/covid-19/ecdc_cases');\ngo \nselect top 10 * \nfrom \n    openrowset( \n        bulk 'latest/ecdc_cases.jsonl', \n        data_source = 'covid', \n        format = 'csv', \n        fieldterminator ='0x0b', \n        fieldquote = '0x0b' \n    ) with (doc nvarchar(max)) as rows \n\n\n-- Part 3\nselect \n    JSON_VALUE(doc, '$.date_rep') AS date_reported, \n    JSON_VALUE(doc, '$.countries_and_territories') AS country, \n    JSON_VALUE(doc, '$.cases') as cases, \n    doc \nfrom \n    openrowset( \n        bulk 'latest/ecdc_cases.jsonl', \n        data_source = 'covid', \n        format = 'csv', \n        fieldterminator ='0x0b', \n        fieldquote = '0x0b' \n    ) with (doc nvarchar(max)) as rows \norder by JSON_VALUE(doc, '$.geo_id') desc\n\n-- Part 4\nselect * \nfrom \n    openrowset( \n        bulk 'latest/ecdc_cases.jsonl', \n        data_source = 'covid', \n        format = 'csv', \n        fieldterminator ='0x0b', \n        fieldquote = '0x0b' \n    ) with (doc nvarchar(max)) as rows \n    cross apply openjson (doc) \n        with ( date_rep datetime2, \n                   cases int, \n                   fatal int '$.deaths', \n                   country varchar(100) '$.countries_and_territories') \nwhere country = 'Serbia' \norder by country, date_rep desc;\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "ExternalBlobTable",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"name": "SQL Ext Table Datalake Aut",
+	"properties": {
+		"description": "Script generado automaticamente\nhttps://github.com/MicrosoftDocs/azure-docs/blob/master/articles/synapse-analytics/sql/develop-tables-external-tables.md",
+		"content": {
+			"query": "-- Creado automáticamente con botón derecho sobre el csv en el datalake\n\nIF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t USE_TYPE_DEFAULT = FALSE\n\t\t\t))\nGO\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'dev_synapsedaydatalake_dfs_core_windows_net') \n\tCREATE EXTERNAL DATA SOURCE [dev_synapsedaydatalake_dfs_core_windows_net] \n\tWITH (\n\t\tLOCATION = 'abfss://dev@synapsedaydatalake.dfs.core.windows.net' \n\t)\nGO\n\nCREATE EXTERNAL TABLE postalcodes (\n\t[City] nvarchar(4000),\n\t[State] nvarchar(4000),\n\t[Zip] bigint,\n\t[Latitude] float,\n\t[Longitude] float,\n\t[Timezone] bigint,\n\t[DST] bigint\n\t)\n\tWITH (\n\tLOCATION = 'bronze/postalcodes.csv',\n\tDATA_SOURCE = [dev_synapsedaydatalake_dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseDelimitedTextFormat]\n\t)\nGO\n\n\nSELECT TOP 100 * FROM lakeext.postalcodes\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "challengeMetadata",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

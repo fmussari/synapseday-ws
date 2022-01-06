@@ -1,0 +1,21 @@
+{
+	"name": "Exercise 5 - Create Sample Data for Predict",
+	"properties": {
+		"description": "https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/artifacts/05/Exercise%205%20-%20Create%20Sample%20Data%20for%20Predict.sql",
+		"folder": {
+			"name": "00-setup-workspace/Task 9 - SQL Scripts"
+		},
+		"content": {
+			"query": "DROP TABLE [wwi].[SampleData]; \n\n\nCREATE TABLE [wwi].[SampleData] \n(\n    [customerkey] REAL, \n    [stockitemkey] REAL\n);\n\nINSERT INTO [wwi].[SampleData] ([customerkey], [stockitemkey])\nVALUES ( 11, 1 );\n\nSELECT * FROM [wwi].[SampleData];\n\n\n/*\nPareciera que el script lo hacía de dos maneras ...\n\nCREATE TABLE [wwi].[SampleData] \n(\n    [features] REAL,\n    [features2] REAL\n);\n\nINSERT INTO [wwi].[SampleData] ([features], [features2])\nVALUES ( 11, 1 );\n\nSELECT * FROM [wwi].[SampleData];\n*/",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

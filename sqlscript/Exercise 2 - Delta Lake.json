@@ -1,0 +1,21 @@
+{
+	"name": "Exercise 2 - Delta Lake",
+	"properties": {
+		"description": "https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/01-explore-data-lake.md",
+		"folder": {
+			"name": "01-explore-data-lake"
+		},
+		"content": {
+			"query": "\n\nSELECT \n InvoiceYear,\n InvoiceQuarter,\n Sum(cast([Quantity] as int)) as SalesQuantity\nFROM\n    OPENROWSET(\n        BULK 'https://synapsedaydatalake.dfs.core.windows.net/wwi/factsale-deltalake',\n \t\tFORMAT = 'DELTA'\n    ) AS [result]\nWHERE InvoiceYear=2012\nGROUP BY\n     InvoiceYear,\n     InvoiceQuarter\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

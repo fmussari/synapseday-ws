@@ -1,0 +1,452 @@
+{
+	"name": "SourceDataset_y6y",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "gcp lbtc jsons",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "GoogleCloudStorageLocation",
+				"bucketName": "btcusd-lbtc-gzip-data-lake",
+				"fileName": "1567975108_ccs_2019-09-08_16.38.28.gzip"
+			},
+			"compression": {
+				"type": "gzip"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"btcusd": {
+					"type": "object",
+					"properties": {
+						"coinmarketcap": {
+							"type": "object",
+							"properties": {
+								"price": {
+									"type": "number"
+								},
+								"volume_24h": {
+									"type": "number"
+								},
+								"percent_change_1h": {
+									"type": "number"
+								},
+								"percent_change_24h": {
+									"type": "number"
+								},
+								"percent_change_7d": {
+									"type": "number"
+								},
+								"market_cap": {
+									"type": "number"
+								},
+								"last_updated": {
+									"type": "string"
+								}
+							}
+						},
+						"bitcoinaverage": {
+							"type": "object",
+							"properties": {
+								"last": {
+									"type": "number"
+								},
+								"averages": {
+									"type": "object",
+									"properties": {
+										"day": {
+											"type": "number"
+										}
+									}
+								},
+								"ask": {
+									"type": "number"
+								},
+								"timestamp": {
+									"type": "integer"
+								},
+								"bid": {
+									"type": "number"
+								}
+							}
+						},
+						"bitfinex": {
+							"type": "object",
+							"properties": {
+								"mid": {
+									"type": "string"
+								},
+								"bid": {
+									"type": "string"
+								},
+								"ask": {
+									"type": "string"
+								},
+								"last_price": {
+									"type": "string"
+								},
+								"low": {
+									"type": "string"
+								},
+								"high": {
+									"type": "string"
+								},
+								"volume": {
+									"type": "string"
+								},
+								"timestamp": {
+									"type": "string"
+								}
+							}
+						},
+						"bitstamp": {
+							"type": "object",
+							"properties": {
+								"high": {
+									"type": "string"
+								},
+								"last": {
+									"type": "string"
+								},
+								"timestamp": {
+									"type": "string"
+								},
+								"bid": {
+									"type": "string"
+								},
+								"vwap": {
+									"type": "string"
+								},
+								"volume": {
+									"type": "string"
+								},
+								"low": {
+									"type": "string"
+								},
+								"ask": {
+									"type": "string"
+								},
+								"open": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"localbitcoins": {
+					"type": "object",
+					"properties": {
+						"buy": {
+							"type": "object",
+							"properties": {
+								"date": {
+									"type": "object",
+									"properties": {
+										"utc_timestamp": {
+											"type": "integer"
+										},
+										"ccs_datetime": {
+											"type": "string"
+										}
+									}
+								},
+								"ad_list": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"data": {
+												"type": "object",
+												"properties": {
+													"profile": {
+														"type": "object",
+														"properties": {
+															"username": {
+																"type": "string"
+															},
+															"feedback_score": {
+																"type": "integer"
+															},
+															"trade_count": {
+																"type": "string"
+															},
+															"last_online": {
+																"type": "string"
+															},
+															"name": {
+																"type": "string"
+															}
+														}
+													},
+													"require_feedback_score": {
+														"type": "integer"
+													},
+													"hidden_by_opening_hours": {
+														"type": "boolean"
+													},
+													"trade_type": {
+														"type": "string"
+													},
+													"ad_id": {
+														"type": "integer"
+													},
+													"temp_price": {
+														"type": "string"
+													},
+													"bank_name": {
+														"type": "string"
+													},
+													"payment_window_minutes": {
+														"type": "integer"
+													},
+													"trusted_required": {
+														"type": "boolean"
+													},
+													"min_amount": {
+														"type": "string"
+													},
+													"visible": {
+														"type": "boolean"
+													},
+													"require_trusted_by_advertiser": {
+														"type": "boolean"
+													},
+													"temp_price_usd": {
+														"type": "string"
+													},
+													"lat": {
+														"type": "number"
+													},
+													"is_local_office": {
+														"type": "boolean"
+													},
+													"first_time_limit_btc": {
+														"type": "null"
+													},
+													"atm_model": {
+														"type": "null"
+													},
+													"city": {
+														"type": "string"
+													},
+													"location_string": {
+														"type": "string"
+													},
+													"countrycode": {
+														"type": "string"
+													},
+													"currency": {
+														"type": "string"
+													},
+													"limit_to_fiat_amounts": {
+														"type": "null"
+													},
+													"created_at": {
+														"type": "string"
+													},
+													"max_amount": {
+														"type": "string"
+													},
+													"lon": {
+														"type": "number"
+													},
+													"sms_verification_required": {
+														"type": "boolean"
+													},
+													"require_trade_volume": {
+														"type": "number"
+													},
+													"online_provider": {
+														"type": "string"
+													},
+													"max_amount_available": {
+														"type": "string"
+													},
+													"msg": {
+														"type": "string"
+													},
+													"require_identification": {
+														"type": "boolean"
+													},
+													"volume_coefficient_btc": {
+														"type": "string"
+													}
+												}
+											},
+											"actions": {
+												"type": "object",
+												"properties": {
+													"public_view": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						},
+						"sell": {
+							"type": "object",
+							"properties": {
+								"date": {
+									"type": "object",
+									"properties": {
+										"utc_timestamp": {
+											"type": "integer"
+										},
+										"ccs_datetime": {
+											"type": "string"
+										}
+									}
+								},
+								"ad_list": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"data": {
+												"type": "object",
+												"properties": {
+													"profile": {
+														"type": "object",
+														"properties": {
+															"username": {
+																"type": "string"
+															},
+															"feedback_score": {
+																"type": "integer"
+															},
+															"trade_count": {
+																"type": "string"
+															},
+															"last_online": {
+																"type": "string"
+															},
+															"name": {
+																"type": "string"
+															}
+														}
+													},
+													"require_feedback_score": {
+														"type": "integer"
+													},
+													"hidden_by_opening_hours": {
+														"type": "boolean"
+													},
+													"trade_type": {
+														"type": "string"
+													},
+													"ad_id": {
+														"type": "integer"
+													},
+													"temp_price": {
+														"type": "string"
+													},
+													"bank_name": {
+														"type": "string"
+													},
+													"payment_window_minutes": {
+														"type": "integer"
+													},
+													"trusted_required": {
+														"type": "boolean"
+													},
+													"min_amount": {
+														"type": "string"
+													},
+													"visible": {
+														"type": "boolean"
+													},
+													"require_trusted_by_advertiser": {
+														"type": "boolean"
+													},
+													"temp_price_usd": {
+														"type": "string"
+													},
+													"lat": {
+														"type": "number"
+													},
+													"is_local_office": {
+														"type": "boolean"
+													},
+													"first_time_limit_btc": {
+														"type": "null"
+													},
+													"atm_model": {
+														"type": "null"
+													},
+													"city": {
+														"type": "string"
+													},
+													"location_string": {
+														"type": "string"
+													},
+													"countrycode": {
+														"type": "string"
+													},
+													"currency": {
+														"type": "string"
+													},
+													"limit_to_fiat_amounts": {
+														"type": "string"
+													},
+													"created_at": {
+														"type": "string"
+													},
+													"max_amount": {
+														"type": "string"
+													},
+													"lon": {
+														"type": "number"
+													},
+													"is_low_risk": {
+														"type": "boolean"
+													},
+													"sms_verification_required": {
+														"type": "boolean"
+													},
+													"require_trade_volume": {
+														"type": "number"
+													},
+													"online_provider": {
+														"type": "string"
+													},
+													"max_amount_available": {
+														"type": "string"
+													},
+													"msg": {
+														"type": "string"
+													},
+													"require_identification": {
+														"type": "boolean"
+													},
+													"volume_coefficient_btc": {
+														"type": "string"
+													}
+												}
+											},
+											"actions": {
+												"type": "object",
+												"properties": {
+													"public_view": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

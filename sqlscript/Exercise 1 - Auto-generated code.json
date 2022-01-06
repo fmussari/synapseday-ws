@@ -1,0 +1,21 @@
+{
+	"name": "Exercise 1 - Auto-generated code",
+	"properties": {
+		"description": "https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/01-explore-data-lake.md",
+		"folder": {
+			"name": "01-explore-data-lake"
+		},
+		"content": {
+			"query": "-- This is auto-generated code\n\n-- Guide\n-- https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/01-explore-data-lake.md\nSELECT\n    COUNT (*)\nFROM\n    OPENROWSET(\n        BULK 'https://synapsedaydatalake.dfs.core.windows.net/wwi/factsale-parquet/2012/Q1/*/*',\n        FORMAT = 'PARQUET'\n    ) AS [result]\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"name": "Mod 12 - Tablas con Diferentes Opt",
+	"properties": {
+		"description": "https://docs.microsoft.com/en-us/learn/modules/optimize-data-warehouse-query-performance-azure-synapse-analytics/3-exercise-understand-performance-issues-related-to-tables",
+		"folder": {
+			"name": "ASA 30 days Challenge"
+		},
+		"content": {
+			"query": "-- En el ejercicio usan una tabla wwi_perf.Sale_Heap\n-- Aquí tengo es wwi_perf.FactSale_Slow y wwi_perf.FactSale_Fast\n\n-- Se hicieron los ejercicios con el Lab de Github\n-- https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/04-high-performance-analysis.md\n\n-- SQL Script en\n-- Exercise 4 - Investigate query performance\n-- la vaina me dió alrevés...\n\n\n-- Voy a tratar de replicar ahora esto:\n-- Exercise - Use table distribution and indexes to improve performance\n-- https://docs.microsoft.com/en-us/learn/modules/optimize-data-warehouse-query-performance-azure-synapse-analytics/6-exercise-use-table-distribution-indexes-to-improve-performance\n\n\n\n-- Intentar hacer varias copias de Sales, con diferentes parámetros\n\n-- Primer Intento \n\n-----------------------------\n-- Sale_FM_Hash_And_Clustered. \n-- Esta debería ser idéntica en performance a \n-- [wwi_perf].[FactSale_Fast]\n\nCREATE TABLE [wwi_perf].[Sale_Hash_Clustrd]\nWITH\n(\n\n   DISTRIBUTION = HASH ( [CustomerKey] ),\n   --DISTRIBUTION = HASH ( [CustomerId] ),\n   CLUSTERED COLUMNSTORE INDEX\n)\nAS\nSELECT\n   *\nFROM\n   [wwi].[FactSale]\n   -- (Esta sólo tiene 12,228,005 registros... perfect para pruebas)\n\n-- Caraj... se ejecutó en 44 sec?\n\n-----------------------------\n-- Otra Sale_NoOptimization\nCREATE TABLE [wwi_perf].[Sale_NoNothing]\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN,\n    HEAP\n)\nAS\nSELECT\n   *\nFROM\n   [wwi].[FactSale]\n-----------------------------\n-- Otra Sale_Hash_Heap\n\nCREATE TABLE [wwi_perf].[Sale_Hash_Heap]\nWITH\n(\n   DISTRIBUTION = HASH ( [CustomerKey] ),\n   HEAP\n)\nAS\nSELECT\n   *\nFROM\n   [wwi].[FactSale]\n\n-----------------------------\n-- 4 - Sale_NoHash_Clustrd\n\nCREATE TABLE [wwi_perf].[Sale_NoHash_Clustrd]\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN,\n    CLUSTERED COLUMNSTORE INDEX\n)\nAS\nSELECT\n   *\nFROM\n   [wwi].[FactSale]\n\n-----------------------------\n-----------------------------\n\n-----------------------------\n-- 5 - Sale_Dupli_Clustrd\nCREATE TABLE [wwi_perf].[Sale_Dupli_Clustrd]\nWITH\n(\n\n    DISTRIBUTION = REPLICATE,\n    CLUSTERED COLUMNSTORE INDEX\n)\nAS\nSELECT\n   *\nFROM\n   [wwi].[FactSale]\n-----------------------------\n-----------------------------\n\n\n\n\nSELECT COUNT(*) FROM wwi_perf.Sale_Hash_Clustrd\nSELECT COUNT(*) FROM wwi_perf.Sale_NoNothing",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

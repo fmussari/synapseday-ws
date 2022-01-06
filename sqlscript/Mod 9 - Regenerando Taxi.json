@@ -1,0 +1,21 @@
+{
+	"name": "Mod 9 - Regenerando Taxi",
+	"properties": {
+		"description": "Los tutoriales de Taxi anteriores (Mod 8) Cargaban Taxi como Null porque los nombres de las columnas estaban errados",
+		"folder": {
+			"name": "ASA 30 days Challenge"
+		},
+		"content": {
+			"query": "-- La Tabla Taxi se creó con puros Nulls en los tutoriales anteriores...\n-- Los nombres de las columnas estaban errados\n\nUSE [ExternalBlobTable];\nGO\n\nIF (EXISTS(SELECT * FROM sys.external_tables WHERE name = 'Taxi')) BEGIN\n    DROP EXTERNAL TABLE Taxi\nEND\nGO\n\nIF (EXISTS\n    (SELECT * FROM sys.external_file_formats \n    WHERE name = 'ParquetFormat')) BEGIN\n    DROP EXTERNAL FILE FORMAT ParquetFormat\nEND\nGO\n\nIF (EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'nyctlc')) BEGIN\n    DROP EXTERNAL DATA SOURCE nyctlc\nEND\nGO\n\n\n----------------------------------\n-- CREATION\n----------------------------------\n\nCREATE EXTERNAL DATA SOURCE nyctlc\nWITH ( LOCATION = 'https://azureopendatastorage.blob.core.windows.net/nyctlc/')\nGO\n\nCREATE EXTERNAL FILE FORMAT ParquetFormat WITH (  FORMAT_TYPE = PARQUET );\nGO\n\nCREATE EXTERNAL TABLE Taxi (\n    --vendor_id VARCHAR(100) COLLATE Latin1_General_BIN2, \n    vendorID VARCHAR(100) COLLATE Latin1_General_BIN2, \n    --pickup_datetime DATETIME2, \n    tpepPickupDateTime DATETIME2,\n    --dropoff_datetime DATETIME2,\n    tpepDropoffDateTime DATETIME2,\n    --passenger_count INT,\n    passengerCount INT,\n    --trip_distance FLOAT,\n    tripDistance FLOAT,\n    --fare_amount FLOAT,\n    fareAmount FLOAT,\n    --tip_amount FLOAT,\n    tipAmount FLOAT,\n    --tolls_amount FLOAT,\n    tollsAmount FLOAT,\n    --total_amount FLOAT\n    totalAmount FLOAT\n) WITH (\n         LOCATION = 'yellow/puYear=*/puMonth=*/*.parquet',\n         DATA_SOURCE = nyctlc,\n         FILE_FORMAT = ParquetFormat\n);\n\nGO\nSELECT TOP 100 * FROM Taxi\n\n\n\n\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "ExternalBlobTable",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

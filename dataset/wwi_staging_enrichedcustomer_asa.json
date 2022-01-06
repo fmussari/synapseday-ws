@@ -1,0 +1,28 @@
+{
+	"name": "wwi_staging_enrichedcustomer_asa",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sqlpool1b",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"UniqueId": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Task 4 - asa"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "wwi_staging",
+			"table": {
+				"value": "@concat('EnrichedCustomer_', dataset().UniqueId)",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

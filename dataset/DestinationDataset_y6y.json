@@ -1,0 +1,20 @@
+{
+	"name": "DestinationDataset_y6y",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "asastore01",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "gcplbtc",
+				"container": "staging"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

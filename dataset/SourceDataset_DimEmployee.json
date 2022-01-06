@@ -1,0 +1,59 @@
+{
+	"name": "SourceDataset_DimEmployee",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "wwi_dimemployee",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": "|",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Employee Key",
+				"type": "String"
+			},
+			{
+				"name": "WWI Employee ID",
+				"type": "String"
+			},
+			{
+				"name": "Employee",
+				"type": "String"
+			},
+			{
+				"name": "Preferred Name",
+				"type": "String"
+			},
+			{
+				"name": "Is Salesperson",
+				"type": "String"
+			},
+			{
+				"name": "Valid From",
+				"type": "String"
+			},
+			{
+				"name": "Valid To",
+				"type": "String"
+			},
+			{
+				"name": "Lineage Key\r",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

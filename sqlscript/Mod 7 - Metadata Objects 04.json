@@ -1,0 +1,20 @@
+{
+	"name": "Mod 7 - Metadata Objects 04",
+	"properties": {
+		"folder": {
+			"name": "ASA 30 days Challenge"
+		},
+		"content": {
+			"query": "-- Create views in Azure Synapse serverless SQL pools\n-- Unit 6 of 8\n\nUSE challengeMetadata; \nGO \n \nDROP VIEW IF EXISTS populationView; \nGO \n \n-- Ya existe tabla similar csv.population\nCREATE VIEW populationView AS \nSELECT *  \nFROM OPENROWSET(\n        BULK 'csv/population/population.csv', \n        DATA_SOURCE = 'SqlOnDemandDemo', \n        FORMAT = 'CSV',  \n        FIELDTERMINATOR =',',  \n        ROWTERMINATOR = '\\n' \n    ) \nWITH ( \n    [country_code] VARCHAR (5) COLLATE Latin1_General_BIN2, \n    [country_name] VARCHAR (100) COLLATE Latin1_General_BIN2, \n    [year] smallint, \n    [population] bigint \n) AS [r];\n\nGO\n \nSELECT \n    country_name, population \nFROM populationView \nWHERE \n    [year] = 2019 \nORDER BY \n    [population] DESC; ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "challengeMetadata",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

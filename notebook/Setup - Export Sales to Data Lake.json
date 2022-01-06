@@ -1,0 +1,489 @@
+{
+	"name": "Setup - Export Sales to Data Lake",
+	"properties": {
+		"folder": {
+			"name": "00-setup-workspace"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "SparkPool01",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "9a4b9c40-4c69-4003-9b06-77375ca6b56c"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1",
+				"state": {
+					"7a7ea1b2-0ae4-492c-ade5-6027d925532c": {
+						"type": "Synapse.DataFrame",
+						"sync_state": {
+							"table": {
+								"rows": [],
+								"schema": [
+									{
+										"key": "0",
+										"name": "SaleKey",
+										"type": "string"
+									},
+									{
+										"key": "1",
+										"name": "CityKey",
+										"type": "string"
+									},
+									{
+										"key": "2",
+										"name": "CustomerKey",
+										"type": "string"
+									},
+									{
+										"key": "3",
+										"name": "BillToCustomerKey",
+										"type": "string"
+									},
+									{
+										"key": "4",
+										"name": "StockItemKey",
+										"type": "string"
+									},
+									{
+										"key": "5",
+										"name": "InvoiceDateKey",
+										"type": "string"
+									},
+									{
+										"key": "6",
+										"name": "DeliveryDateKey",
+										"type": "string"
+									},
+									{
+										"key": "7",
+										"name": "SalespersonKey",
+										"type": "string"
+									},
+									{
+										"key": "8",
+										"name": "WWIInvoiceID",
+										"type": "string"
+									},
+									{
+										"key": "9",
+										"name": "Description",
+										"type": "string"
+									},
+									{
+										"key": "10",
+										"name": "Package",
+										"type": "string"
+									},
+									{
+										"key": "11",
+										"name": "Quantity",
+										"type": "string"
+									},
+									{
+										"key": "12",
+										"name": "UnitPrice",
+										"type": "string"
+									},
+									{
+										"key": "13",
+										"name": "TaxRate",
+										"type": "string"
+									},
+									{
+										"key": "14",
+										"name": "TotalExcludingTax",
+										"type": "string"
+									},
+									{
+										"key": "15",
+										"name": "TaxAmount",
+										"type": "string"
+									},
+									{
+										"key": "16",
+										"name": "Profit",
+										"type": "string"
+									},
+									{
+										"key": "17",
+										"name": "TotalIncludingTax",
+										"type": "string"
+									},
+									{
+										"key": "18",
+										"name": "TotalDryItems",
+										"type": "string"
+									},
+									{
+										"key": "19",
+										"name": "TotalChillerItems",
+										"type": "string"
+									},
+									{
+										"key": "20",
+										"name": "LineageKey",
+										"type": "string"
+									}
+								]
+							},
+							"isSummary": false,
+							"language": "scala"
+						},
+						"persist_state": {
+							"view": {
+								"type": "details",
+								"chartOptions": {
+									"chartType": "bar",
+									"aggregationType": "count",
+									"categoryFieldKeys": [
+										"0"
+									],
+									"seriesFieldKeys": [
+										"0"
+									],
+									"isStacked": false
+								}
+							}
+						}
+					}
+				}
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/fbfcdd32-da9a-480c-b5c3-1b5d0c6d797c/resourceGroups/Azure-Synapse-Analytics-Day/providers/Microsoft.Synapse/workspaces/synapseday-ws/bigDataPools/SparkPool01",
+				"name": "SparkPool01",
+				"type": "Spark",
+				"endpoint": "https://synapseday-ws.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/SparkPool01",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Setup - Export Sales to Data Lake.ipynb\r\n",
+					"https://github.com/solliancenet/azure-synapse-analytics-day/blob/master/artifacts/00/notebooks/Setup%20-%20Export%20Sales%20to%20Data%20Lake.ipynb"
+				],
+				"attachments": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"microsoft": {
+						"language": "python"
+					}
+				},
+				"source": [
+					"%%pyspark\r\n",
+					"wwi_sales = spark \\\r\n",
+					"    .read \\\r\n",
+					"    .option(\"sep\", \"|\") \\\r\n",
+					"    .load('abfss://dev@synapsedaydatalake.dfs.core.windows.net/bronze/wwi-factsale.csv', format=\"csv\", header=True)\r\n",
+					"\r\n",
+					"wwi_sales = wwi_sales \\\r\n",
+					"    .withColumnRenamed('Sale Key', 'SaleKey') \\\r\n",
+					"    .withColumnRenamed('City Key', 'CityKey') \\\r\n",
+					"    .withColumnRenamed('Customer Key', 'CustomerKey') \\\r\n",
+					"    .withColumnRenamed('Bill To Customer Key', 'BillToCustomerKey') \\\r\n",
+					"    .withColumnRenamed('Stock Item Key', 'StockItemKey') \\\r\n",
+					"    .withColumnRenamed('Invoice Date Key', 'InvoiceDateKey') \\\r\n",
+					"    .withColumnRenamed('Delivery Date Key', 'DeliveryDateKey') \\\r\n",
+					"    .withColumnRenamed('Salesperson Key', 'SalespersonKey') \\\r\n",
+					"    .withColumnRenamed('WWI Invoice ID', 'WWIInvoiceID') \\\r\n",
+					"    .withColumnRenamed('Description', 'Description') \\\r\n",
+					"    .withColumnRenamed('Package', 'Package') \\\r\n",
+					"    .withColumnRenamed('Quantity', 'Quantity') \\\r\n",
+					"    .withColumnRenamed('Unit Price', 'UnitPrice') \\\r\n",
+					"    .withColumnRenamed('Tax Rate', 'TaxRate') \\\r\n",
+					"    .withColumnRenamed('Total Excluding Tax', 'TotalExcludingTax') \\\r\n",
+					"    .withColumnRenamed('Tax Amount', 'TaxAmount') \\\r\n",
+					"    .withColumnRenamed('Profit', 'Profit') \\\r\n",
+					"    .withColumnRenamed('Total Including Tax', 'TotalIncludingTax') \\\r\n",
+					"    .withColumnRenamed('Total Dry Items', 'TotalDryItems') \\\r\n",
+					"    .withColumnRenamed('Total Chiller Items', 'TotalChillerItems') \\\r\n",
+					"    .withColumnRenamed('Lineage Key', 'LineageKey')"
+				],
+				"attachments": null,
+				"execution_count": 1
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import numpy as np\r\n",
+					"from datetime import datetime\r\n",
+					"from dateutil.relativedelta import relativedelta"
+				],
+				"attachments": null,
+				"execution_count": 2
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"### Export WWI sales data to parquet files"
+				],
+				"attachments": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"quarters = 20\r\n",
+					"start_date = datetime(2012, 1, 1)\r\n",
+					"\r\n",
+					"for quarter in np.arange(1, quarters + 1):\r\n",
+					"\r\n",
+					"    quarter_number = 4 if quarter % 4 == 0 else quarter % 4\r\n",
+					"    end_date = start_date + relativedelta(months=3) + relativedelta(days=-1)\r\n",
+					"    \r\n",
+					"    print(f'Exporting data for {start_date.year} Q{quarter_number} ({start_date:%Y-%m-%d} : {end_date:%Y-%m-%d}) ...')\r\n",
+					"\r\n",
+					"    storage_path_parquet = f'abfss://wwi@synapsedaydatalake.dfs.core.windows.net/factsale-parquet/{start_date.year}/Q{quarter_number}'\r\n",
+					"\r\n",
+					"    wwi_sales \\\r\n",
+					"        .where((wwi_sales['InvoiceDateKey'] >= f'{start_date:%Y-%m-%d}') & (wwi_sales['InvoiceDateKey'] <= f'{end_date:%Y-%m-%d}')) \\\r\n",
+					"        .write \\\r\n",
+					"        .partitionBy('InvoiceDateKey') \\\r\n",
+					"        .mode(\"overwrite\") \\\r\n",
+					"        .parquet(storage_path_parquet)\r\n",
+					"\r\n",
+					"    start_date = end_date + relativedelta(days=1)"
+				],
+				"attachments": null,
+				"execution_count": 3
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"#### FM Exploration \r\n",
+					"Dado que me pareció raro que no se exportara nada para 2016 Q3 y Q4, valido que sea que no había datos  \r\n",
+					""
+				],
+				"attachments": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"#display(wwi_sales[wwi_sales.InvoiceDateKey >= \"2015-01-01\"])\r\n",
+					"display(wwi_sales.where((wwi_sales['InvoiceDateKey'] >= '2016-07-01') & (wwi_sales['InvoiceDateKey'] <= '2016-08-01')))"
+				],
+				"attachments": null,
+				"execution_count": 15
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"### Export WWI sales data to CSV files"
+				],
+				"attachments": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"quarters = 20\r\n",
+					"start_date = datetime(2012, 1, 1)\r\n",
+					"\r\n",
+					"for quarter in np.arange(1, quarters + 1):\r\n",
+					"\r\n",
+					"    quarter_number = 4 if quarter % 4 == 0 else quarter % 4\r\n",
+					"    end_date = start_date + relativedelta(months=3) + relativedelta(days=-1)\r\n",
+					"    \r\n",
+					"    print(f'Exporting data for {start_date.year} Q{quarter_number} ({start_date:%Y-%m-%d} : {end_date:%Y-%m-%d}) ...')\r\n",
+					"\r\n",
+					"    storage_path_csv = f'abfss://wwi@synapsedaydatalake.dfs.core.windows.net/factsale-csv/{start_date.year}/Q{quarter_number}'\r\n",
+					"\r\n",
+					"    wwi_sales \\\r\n",
+					"        .where((wwi_sales['InvoiceDateKey'] >= f'{start_date:%Y-%m-%d}') & (wwi_sales['InvoiceDateKey'] <= f'{end_date:%Y-%m-%d}')) \\\r\n",
+					"        .write \\\r\n",
+					"        .partitionBy('InvoiceDateKey') \\\r\n",
+					"        .mode(\"overwrite\") \\\r\n",
+					"        .option(\"quote\", \"\\u0000\") \\\r\n",
+					"        .option(\"sep\",\"|\") \\\r\n",
+					"        .csv(storage_path_csv, header=True)\r\n",
+					"\r\n",
+					"    start_date = end_date + relativedelta(days=1)"
+				],
+				"attachments": null,
+				"execution_count": 16
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"### Export WWI sales data to Delta Lake"
+				],
+				"attachments": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"from pyspark.sql import functions as fn\r\n",
+					"quarters = 20\r\n",
+					"start_date = datetime(2012, 1, 1)\r\n",
+					"\r\n",
+					"wwi_sales2 = wwi_sales \\\r\n",
+					"        .withColumn(\"InvoiceYear\", fn.year(wwi_sales['InvoiceDateKey'])) \\\r\n",
+					"        .withColumn(\"InvoiceQuarter\", fn.quarter(wwi_sales['InvoiceDateKey'])) \\\r\n",
+					"\r\n",
+					"for quarter in np.arange(1, quarters + 1):\r\n",
+					"\r\n",
+					"    quarter_number = 4 if quarter % 4 == 0 else quarter % 4\r\n",
+					"    end_date = start_date + relativedelta(months=3) + relativedelta(days=-1)\r\n",
+					"    \r\n",
+					"    print(f'Exporting data for {start_date.year} Q{quarter_number} ({start_date:%Y-%m-%d} : {end_date:%Y-%m-%d}) ...')\r\n",
+					"\r\n",
+					"    storage_path_delta = f'abfss://wwi@synapsedaydatalake.dfs.core.windows.net/factsale-deltalake'\r\n",
+					"\r\n",
+					"    wwi_sales2 \\\r\n",
+					"        .where((wwi_sales['InvoiceDateKey'] >= f'{start_date:%Y-%m-%d}') & (wwi_sales['InvoiceDateKey'] <= f'{end_date:%Y-%m-%d}')) \\\r\n",
+					"        .write \\\r\n",
+					"        .format(\"delta\") \\\r\n",
+					"        .partitionBy('InvoiceYear', 'InvoiceQuarter', 'InvoiceDateKey') \\\r\n",
+					"        .mode(\"append\") \\\r\n",
+					"        .save(storage_path_delta)\r\n",
+					"\r\n",
+					"    start_date = end_date + relativedelta(days=1)"
+				],
+				"attachments": null,
+				"execution_count": 17
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"attachments": null,
+				"execution_count": null
+			}
+		]
+	}
+}

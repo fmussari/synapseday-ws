@@ -1,0 +1,20 @@
+{
+	"name": "Task 6 - Configure the SQL on-demand pool",
+	"properties": {
+		"folder": {
+			"name": "00-setup-workspace"
+		},
+		"content": {
+			"query": "CREATE DATABASE SQLOnDemand01\n\nCREATE CREDENTIAL [https://synapsedaydatalake.dfs.core.windows.net]\nWITH IDENTITY='User Identity';",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

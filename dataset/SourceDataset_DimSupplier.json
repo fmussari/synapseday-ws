@@ -1,0 +1,71 @@
+{
+	"name": "SourceDataset_DimSupplier",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "wwi_dimsupplier",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Creados para cargar datos al datalake"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": "|",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Supplier Key",
+				"type": "String"
+			},
+			{
+				"name": "WWI Supplier ID",
+				"type": "String"
+			},
+			{
+				"name": "Supplier",
+				"type": "String"
+			},
+			{
+				"name": "Category",
+				"type": "String"
+			},
+			{
+				"name": "Primary Contact",
+				"type": "String"
+			},
+			{
+				"name": "Supplier Reference",
+				"type": "String"
+			},
+			{
+				"name": "Payment Days",
+				"type": "String"
+			},
+			{
+				"name": "Postal Code",
+				"type": "String"
+			},
+			{
+				"name": "Valid From",
+				"type": "String"
+			},
+			{
+				"name": "Valid To",
+				"type": "String"
+			},
+			{
+				"name": "Lineage Key\r",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.Synapse/workspaces/datasets"
+}

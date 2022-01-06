@@ -1,0 +1,20 @@
+{
+	"name": "Mod 7 - Metadata Objects 05",
+	"properties": {
+		"folder": {
+			"name": "ASA 30 days Challenge"
+		},
+		"content": {
+			"query": "USE challengeMetadata; \nGO \n \nDROP VIEW IF EXISTS TaxiView; \nGO \n\nCREATE VIEW TaxiView \nAS SELECT *, nyc.filepath(1) AS [year], nyc.filepath(2) AS [month] \nFROM \n    OPENROWSET( \n        BULK 'parquet/taxi/year=*/month=*/*.parquet', \n        DATA_SOURCE = 'sqlondemanddemo', \n        FORMAT='PARQUET' \n    ) AS nyc \n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "challengeMetadata",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
